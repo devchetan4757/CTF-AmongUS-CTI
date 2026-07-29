@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from fastapi import APIRouter, FastAPI
@@ -12,15 +13,21 @@ app = FastAPI(
     version="0.1.0",
 )
 
-# Kept for local dev when the frontend is run separately via `vite`
-# (port 5173) instead of being served by this app. Harmless in
-# production since same-origin requests don't need CORS at all.
+# localhost:5173 covers local `vite` dev. FRONTEND_ORIGIN is the
+# deployed Render Static Site's URL, set as an env var on this
+# service -- needed now that frontend and backend are two separate
+# services/origins instead of one. The static site's render.yaml
+# rewrites also make most requests same-origin from the browser's
+# point of view, but CORS is kept as a fallback (e.g. direct API
+# calls, previews, local frontend hitting the deployed backend).
+_extra_origin = os.environ.get("FRONTEND_ORIGIN")
+_allowed_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+if _extra_origin:
+    _allowed_origins.append(_extra_origin)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

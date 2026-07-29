@@ -1,9 +1,17 @@
-// Relative, same-origin URLs. In dev, Vite proxies /api/* to the
-// FastAPI backend on :8000 (see vite.config.js). In production, this
-// app and the API are served by the same FastAPI process, so no host
-// needs to be hardcoded.
+// In dev, Vite proxies /api, /site, /security to the FastAPI backend
+// on :8000 (see vite.config.js), so a relative path works as-is.
+//
+// In production the frontend is a separate Render Static Site from
+// the backend. VITE_API_URL points at the backend's own URL
+// (e.g. https://the-imposter-api.onrender.com). If it's unset we
+// fall back to a relative path, which still works because the
+// static site's render.yaml rewrites /api, /site, /security through
+// to the backend -- so the game's "type it into the address bar"
+// puzzles still feel same-origin even though two services serve them.
+const API_BASE = import.meta.env.VITE_API_URL ?? "";
+
 async function request(path, options = {}) {
-  const res = await fetch(path, {
+  const res = await fetch(`${API_BASE}${path}`, {
     headers: {
       "Content-Type": "application/json",
     },

@@ -1,0 +1,37 @@
+services:
+  # ---- Backend: FastAPI API only, no static assets ----
+  - type: web
+    name: the-imposter-api
+    runtime: python
+    buildCommand: pip install --no-cache-dir -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: FRONTEND_ORIGIN
+        value: https://the-imposter-web.onrender.com  # update after first deploy if the name differs
+
+  # ---- Frontend: static build, served from Render's CDN ----
+  - type: web
+    name: the-imposter-web
+    runtime: static
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: ""  # left blank on purpose: rewrites below make /api,/site,/security same-origin
+    routes:
+      # Puzzle routes that must stay at the real root (address-bar
+      # missions) get proxied straight through to the backend.
+      - type: rewrite
+        source: /api/*
+        destination: https://the-imposter-api.onrender.com/api/*
+      - type: rewrite
+        source: /site/*
+        destination: https://the-imposter-api.onrender.com/site/*
+      - type: rewrite
+        source: /security/*
+        destination: https://the-imposter-api.onrender.com/security/*
+      # SPA fallback: anything else that isn't a real static file
+      # goes to index.html so React Router can take over.
+      - type: rewrite
+        source: /*
+        destination: /index.html

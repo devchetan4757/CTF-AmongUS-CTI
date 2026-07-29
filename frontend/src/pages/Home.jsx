@@ -21,36 +21,63 @@ export default function Home() {
 
       <div className="relative h-[100dvh] w-full">
         {/* ======================
-            TITLE -- sharp, edgy
+            PORTRAIT / narrow-landscape -- title and button flow
+            together in one column so the button can never collide
+            with the title, no matter how many lines it wraps to.
         ======================= */}
-        <div className="absolute left-14 top-[26%] z-20 w-[calc(100%-3rem)] max-w-xl sm:left-24 sm:top-[28%] sm:max-w-2xl md:left-32 lg:landscape:left-[25%] lg:landscape:top-[22%] lg:landscape:max-w-xl">
-          <h1 className="-skew-x-6 font-mono text-5xl font-extrabold uppercase italic leading-[0.95] tracking-tight text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)] sm:text-7xl md:text-8xl lg:landscape:text-6xl">
+        <div className="absolute inset-x-6 top-[20%] z-20 flex max-w-xl flex-col items-start gap-5 sm:inset-x-12 sm:top-[24%] sm:max-w-2xl md:inset-x-16 lg:landscape:hidden">
+          <h1 className="-skew-x-6 font-mono text-[clamp(1rem,5vw,1.5rem)] font-extrabold uppercase italic leading-[0.95] tracking-tight text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)] sm:text-4xl md:text-5xl">
             Capture
             <br />
             the <span className="text-[#FF3C32]">Imposter</span>
           </h1>
-        </div>
 
-        {/* ======================
-            START BUTTON -- middle-left
-        ======================= */}
-        <div className="absolute left-6 top-1/2 z-30 -translate-y-1/2 sm:left-12 md:left-16 lg:landscape:left-[60%] lg:landscape:top-[60%] lg:landscape:translate-y-0">
           <Link
             to="/story"
             onClick={playClick}
             className="
-              group relative flex h-20 w-52 items-center justify-center
-              overflow-hidden border-[3px] border-black bg-[#FF3C32]
-              shadow-[4px_4px_0_0_#000] transition-all duration-150
+              group relative flex h-10 w-28 items-center justify-center
+              overflow-hidden border-[2px] border-black bg-[#FF3C32]
+              shadow-[2px_2px_0_0_#000] transition-all duration-150
               hover:scale-[1.02] active:translate-y-[2px] active:shadow-none
-              sm:h-24 sm:w-64 md:h-28 md:w-72
-              lg:landscape:h-16 lg:landscape:w-48
+              sm:h-12 sm:w-32 md:h-14 md:w-36
             "
           >
-            <span className="relative -skew-x-6 font-display text-2xl font-extrabold uppercase italic tracking-wide text-black sm:text-3xl md:text-4xl lg:landscape:text-xl">
+            <span className="relative -skew-x-6 font-display text-base font-extrabold uppercase italic tracking-wide text-black sm:text-lg md:text-xl">
               Start
             </span>
           </Link>
+        </div>
+
+        {/* ======================
+            WIDE LANDSCAPE -- roomier, so title and button can go
+            back to being positioned independently on opposite sides.
+        ======================= */}
+        <div className="hidden lg:landscape:block">
+          <div className="absolute left-[25%] top-[22%] z-20 max-w-xl">
+            <h1 className="-skew-x-6 font-mono text-6xl font-extrabold uppercase italic leading-[0.95] tracking-tight text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)]">
+              Capture
+              <br />
+              the <span className="text-[#FF3C32]">Imposter</span>
+            </h1>
+          </div>
+
+          <div className="absolute left-[60%] top-[60%] z-30">
+            <Link
+              to="/story"
+              onClick={playClick}
+              className="
+                group relative flex h-16 w-48 items-center justify-center
+                overflow-hidden border-[3px] border-black bg-[#FF3C32]
+                shadow-[4px_4px_0_0_#000] transition-all duration-150
+                hover:scale-[1.02] active:translate-y-[2px] active:shadow-none
+              "
+            >
+              <span className="relative -skew-x-6 font-display text-xl font-extrabold uppercase italic tracking-wide text-black">
+                Start
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     </ResponsiveBackground>
