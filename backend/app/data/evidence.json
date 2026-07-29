@@ -1,0 +1,40 @@
+{
+  "correct_suspect": "guard",
+  "suspects": [
+    {
+      "id": "cook",
+      "name": "Cook",
+      "role": "Cafeteria Chef",
+      "mission_id": "cafeteria",
+      "clue": "A shift log left open on the terminal shows the same crew member badged into the Cafeteria twice within one hour -- once more than their schedule allows."
+    },
+    {
+      "id": "clerk",
+      "name": "Clerk",
+      "role": "Admin Assistant",
+      "mission_id": "admin",
+      "clue": "The hidden staging page still lists the Admin Assistant as the last person to edit the crew directory, timestamped the night of the incident."
+    },
+    {
+      "id": "guard",
+      "name": "Guard",
+      "role": "Security Officer",
+      "mission_id": "security",
+      "clue": "The dumped session log shows the Security Officer disabled the corridor camera outside the Lab twelve minutes before the incident was reported."
+    },
+    {
+      "id": "hauler",
+      "name": "Hauler",
+      "role": "Storage Technician",
+      "mission_id": "storage",
+      "clue": "The decoded manifest shows the crate was signed out by the Storage Technician, who had no clearance for lab equipment that day."
+    },
+    {
+      "id": "researcher",
+      "name": "Researcher",
+      "role": "Lab Scientist",
+      "mission_id": "laboratory",
+      "clue": "The unlocked record shows the Lab Scientist ran an off-the-books background check on a crewmate the same night, then filed the results under a fake name."
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  The Imposter -- design tokens
+  -------------------------------------------------------------
+  Palette:
+    --void          #0B0F1F  page background, deep space
+    --panel         #1A2138  chunky rounded panels
+    --panel-raised  #232C4D  hover / active panel state
+    --panel-line    #2E386B  hairline borders on panels
+    --signal        #3FE8D2  primary accent -- tech glow, success, terminal
+    --alert         #FF6B5B  danger, incorrect states, the imposter's color
+    --caution       #FFC24B  hints, warnings, caution stripes
+    --paper         #F4F6FF  primary text on dark panels
+
+  Type:
+    display -- Baloo 2      (chunky, rounded, cartoon-sci-fi headings)
+    body    -- Space Grotesk (geometric, readable UI copy)
+    mono    -- Space Mono    (terminal snippets, flags, code)
+*/
+
+:root {
+  --void: #0b0f1f;
+  --panel: #1a2138;
+  --panel-raised: #232c4d;
+  --panel-line: #2e386b;
+  --signal: #3fe8d2;
+  --alert: #ff6b5b;
+  --caution: #ffc24b;
+  --paper: #f4f6ff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background-color: var(--void);
+  color: var(--paper);
+  font-family: "Space Grotesk", sans-serif;
+  /* Starfield: two radial layers give the void some depth without an image asset. */
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(244, 246, 255, 0.5), transparent),
+    radial-gradient(1px 1px at 65% 15%, rgba(244, 246, 255, 0.35), transparent),
+    radial-gradient(2px 2px at 80% 60%, rgba(63, 232, 210, 0.4), transparent),
+    radial-gradient(1px 1px at 40% 80%, rgba(244, 246, 255, 0.4), transparent),
+    radial-gradient(1px 1px at 90% 85%, rgba(244, 246, 255, 0.3), transparent);
+  background-repeat: repeat;
+  background-size: 600px 600px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Baloo 2", cursive;
+}
+
+code,
+.font-mono {
+  font-family: "Space Mono", monospace;
+}
+
+/* Visible keyboard focus everywhere, on top of Tailwind's utilities. */
+:focus-visible {
+  outline: 3px solid var(--signal);
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+
+/*
+  Responsive full-bleed backgrounds
+  -------------------------------------------------------------
+  All of our full-screen art was exported portrait-first (tall,
+  ~2:3), which looks great on a phone held upright but crops
+  badly once the viewport goes wide (tablets, desktop, or a
+  phone rotated to landscape).
+
+  `.bg-responsive` reads two CSS custom properties set inline
+  per element -- `--bg-portrait` and `--bg-landscape` -- and
+  swaps between them with a media query, so no JS/layout work
+  is needed and the browser only ever downloads the image it's
+  actually going to show.
+
+  Usage (see ResponsiveBackground.jsx for the React wrapper):
+    <div
+      className="bg-responsive bg-cover bg-center"
+      style={{
+        "--bg-portrait": "url(/images/home-bg.jpg)",
+        "--bg-landscape": "url(/images/home-bg-landscape.jpg)",
+      }}
+    />
+
+  The breakpoint below fires once the viewport is wider than it
+  is tall (landscape phones, tablets, desktop) AND reasonably
+  wide, so a briefly-squashed portrait window doesn't flicker
+  over to the landscape crop.
+*/
+.bg-responsive {
+  background-image: var(--bg-portrait);
+}
+
+@media (orientation: landscape) and (min-width: 640px) {
+  .bg-responsive {
+    background-image: var(--bg-landscape, var(--bg-portrait));
+  }
+}

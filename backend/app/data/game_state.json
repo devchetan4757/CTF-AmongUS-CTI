@@ -1,0 +1,11 @@
+{
+  "suspects": [
+    { "id": "cook", "name": "Cook", "role": "Cafeteria Chef" },
+    { "id": "clerk", "name": "Clerk", "role": "Admin Assistant" },
+    { "id": "guard", "name": "Guard", "role": "Security Officer" },
+    { "id": "hauler", "name": "Hauler", "role": "Storage Technician" },
+    { "id": "researcher", "name": "Researcher", "role": "Lab Scientist" }
+  ],
+  "infiltrator_id": "guard",
+  "final_flag": "FLAG{the_guard_went_dark}"
+}
