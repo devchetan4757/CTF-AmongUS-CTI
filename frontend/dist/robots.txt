@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /site/
-# staging - remove before launch
-# FLAG{robots_dot_txt_secrets}
