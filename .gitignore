@@ -18,5 +18,4 @@ venv/
 node_modules/
 
 # Frontend build output (Docker copies this in at build time, don't commit it)
-frontend/dist/
 backend/app/static/
