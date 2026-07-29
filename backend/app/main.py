@@ -60,12 +60,14 @@ app.include_router(security.router)
 
 # --- Serve the built frontend (production only) --------------------
 # In dev, the frontend runs separately via `vite` on :5173. In
-# production (Docker/Render), the frontend is built to static files
-# and copied to backend/app/static by the build step, and this app
-# serves both the API and the SPA from one process/port.
+# production (Docker/Render), this app serves both the API and the
+# built SPA from one process/port, reading straight out of
+# frontend/dist -- no copy-to-backend step, so there's no separate
+# "did the copy actually run" failure mode. main.py lives at
+# backend/app/main.py, so frontend/dist is three levels up.
 from fastapi.responses import FileResponse
 
-STATIC_DIR = Path(__file__).parent / "static"
+STATIC_DIR = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
 if STATIC_DIR.exists():
     # Hashed JS/CSS build output -- safe to serve directly, filenames are
     # unique per build so there's no staleness/caching ambiguity.
