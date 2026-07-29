@@ -12,6 +12,9 @@ app = FastAPI(
     version="0.1.0",
 )
 
+# Kept for local dev when the frontend is run separately via `vite`
+# (port 5173) instead of being served by this app. Harmless in
+# production since same-origin requests don't need CORS at all.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -39,9 +42,47 @@ app.include_router(api)
 def health() -> dict[str, str]:
     return {"status": "ok"}
 
+# These two stay at the real site root -- on purpose. Both missions
+# are "type this into the address bar / login form" puzzles, and only
+# work if they live at the site's actual root, not behind /api.
 app.include_router(admin_site.router)
 app.include_router(security.router)
 
+# Note: robots.txt for the Admin Office mission is a real static file
+# at frontend/public/robots.txt, served by Vite in dev and copied into
+# the frontend build's dist/ root in production (below), so the player
+# finds it by typing /robots.txt into the address bar themselves.
+
+# Note: the Laboratory mission no longer has its own /lab/search
+# endpoint. The player reads the birth year off the pinned photo's
+# lookup, then submits it straight through the mission's normal
+# answer field like every other room.
+
+# --- Serve the built frontend (production only) --------------------
+# In dev, the frontend runs separately via `vite` on :5173. In
+# production (Docker/Render), the frontend is built to static files
+# and copied to backend/app/static by the build step, and this app
+# serves both the API and the SPA from one process/port.
+from fastapi.responses import FileResponse
+
 STATIC_DIR = Path(__file__).parent / "static"
 if STATIC_DIR.exists():
-    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+    # Hashed JS/CSS build output -- safe to serve directly, filenames are
+    # unique per build so there's no staleness/caching ambiguity.
+    assets_dir = STATIC_DIR / "assets"
+    if assets_dir.exists():
+        app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
+
+    # Catch-all: this app is a client-side-routed SPA (React Router), so a
+    # fresh/direct request to something like /facility or /mission/cafeteria
+    # (e.g. a hard refresh, or toggling "Desktop site" which reloads the
+    # current URL) has to still return index.html and let React Router take
+    # over client-side -- otherwise the server 404s on any path that isn't
+    # literally a file on disk. Real static files (images, robots.txt, the
+    # manifest, etc.) still get served as themselves if they exist.
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_spa(full_path: str):
+        candidate = STATIC_DIR / full_path
+        if full_path and candidate.is_file():
+            return FileResponse(candidate)
+        return FileResponse(STATIC_DIR / "index.html")
