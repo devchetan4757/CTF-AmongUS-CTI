@@ -6,6 +6,22 @@ import { useRef, useState } from "react";
 
 const FS = {
 
+  "/": {
+    type:"dir",
+    children:[
+      "home"
+    ],
+  },
+
+
+  "/home": {
+    type:"dir",
+    children:[
+      "crew"
+    ],
+  },
+
+
   "/home/crew": {
     type:"dir",
     children:[
@@ -333,6 +349,7 @@ export default function CafeteriaTerminal(){
 
 
 
+
   function handleSubmit(e){
 
     e.preventDefault();
@@ -372,7 +389,6 @@ export default function CafeteriaTerminal(){
         shadow-[6px_6px_0_0_#000]
         "
       >
-
 
 
 

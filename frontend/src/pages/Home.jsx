@@ -25,28 +25,32 @@ export default function Home() {
             together in one column so the button can never collide
             with the title, no matter how many lines it wraps to.
         ======================= */}
-        <div className="absolute inset-x-6 top-[20%] z-20 flex max-w-xl flex-col items-start gap-5 sm:inset-x-12 sm:top-[24%] sm:max-w-2xl md:inset-x-16 lg:landscape:hidden">
-          <h1 className="-skew-x-6 font-mono text-[clamp(1rem,5vw,1.5rem)] font-extrabold uppercase italic leading-[0.95] tracking-tight text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)] sm:text-4xl md:text-5xl">
-            Capture
-            <br />
-            the <span className="text-[#FF3C32]">Imposter</span>
-          </h1>
+        <div className="lg:landscape:hidden">
+          <div className="absolute inset-x-6 top-[32%] z-20 -translate-y-1/2 sm:inset-x-12 sm:max-w-2xl md:inset-x-16">
+            <h1 className="-skew-x-6 font-mono text-[clamp(2rem,11vw,3rem)] font-extrabold uppercase italic leading-[0.95] tracking-tight text-white drop-shadow-[4px_4px_0_rgba(0,0,0,1)] sm:text-6xl md:text-7xl">
+              Capture
+              <br />
+              the <span className="text-[#FF3C32]">Imposter</span>
+            </h1>
+          </div>
 
-          <Link
-            to="/story"
-            onClick={playClick}
-            className="
-              group relative flex h-10 w-28 items-center justify-center
-              overflow-hidden border-[2px] border-black bg-[#FF3C32]
-              shadow-[2px_2px_0_0_#000] transition-all duration-150
-              hover:scale-[1.02] active:translate-y-[2px] active:shadow-none
-              sm:h-12 sm:w-32 md:h-14 md:w-36
-            "
-          >
-            <span className="relative -skew-x-6 font-display text-base font-extrabold uppercase italic tracking-wide text-black sm:text-lg md:text-xl">
-              Start
-            </span>
-          </Link>
+          <div className="absolute right-12 top-[70%] z-20 sm:right-20 md:right-24">
+            <Link
+              to="/story"
+              onClick={playClick}
+              className="
+                group relative flex h-10 w-28 items-center justify-center
+                overflow-hidden border-[2px] border-black bg-[#FF3C32]
+                shadow-[2px_2px_0_0_#000] transition-all duration-150
+                hover:scale-[1.02] active:translate-y-[2px] active:shadow-none
+                sm:h-12 sm:w-32 md:h-14 md:w-36
+              "
+            >
+              <span className="relative -skew-x-6 font-display text-base font-extrabold uppercase italic tracking-wide text-black sm:text-lg md:text-xl">
+                Start
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* ======================
