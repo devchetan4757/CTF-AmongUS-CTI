@@ -10,7 +10,7 @@ services:
         value: https://the-imposter-web.onrender.com
 
   - type: web
-    name: the-imposter-web
+    name: capture-the-imposter
     runtime: static
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
