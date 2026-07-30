@@ -126,7 +126,7 @@ export default function MissionModal({
           className="
           border-[3px]
           border-black
-          bg-[#2E6BFF]
+          bg-[#5EE1F2]
           p-4
           font-body
           text-sm
