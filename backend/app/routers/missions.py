@@ -13,7 +13,7 @@ answer is recorded in progress.json so `completed` on GET /missions
 (and `unlocked` on GET /evidence) reflect real solve state instead of
 always reporting false.
 """
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 
 from app.models import (
     MissionDetail,
@@ -22,6 +22,7 @@ from app.models import (
     MissionSummary,
 )
 from app.progress import is_complete, mark_complete
+from app.session import get_session_id
 from app.storage import read_json
 from app.validation import check_answer, looks_like_flag
 
@@ -40,22 +41,28 @@ def _find_mission(missions: list[dict], mission_id: str) -> dict | None:
 
 
 @router.get("/missions", response_model=list[MissionSummary])
-def list_missions() -> list[MissionSummary]:
+def list_missions(session_id: str = Depends(get_session_id)) -> list[MissionSummary]:
     missions = read_json("missions.json")
-    return [MissionSummary(**m, completed=is_complete(m["id"])) for m in missions]
+    return [
+        MissionSummary(**m, completed=is_complete(session_id, m["id"])) for m in missions
+    ]
 
 
 @router.get("/mission/{mission_id}", response_model=MissionDetail)
-def get_mission(mission_id: str) -> MissionDetail:
+def get_mission(mission_id: str, session_id: str = Depends(get_session_id)) -> MissionDetail:
     missions = read_json("missions.json")
     match = _find_mission(missions, mission_id)
     if match is None:
         raise HTTPException(status_code=404, detail="Mission not found")
-    return MissionDetail(**match, completed=is_complete(mission_id))
+    return MissionDetail(**match, completed=is_complete(session_id, mission_id))
 
 
 @router.post("/mission/{mission_id}/submit", response_model=MissionSubmitResponse)
-def submit_mission(mission_id: str, submission: MissionSubmitRequest) -> MissionSubmitResponse:
+def submit_mission(
+    mission_id: str,
+    submission: MissionSubmitRequest,
+    session_id: str = Depends(get_session_id),
+) -> MissionSubmitResponse:
     missions = read_json("missions.json")
     match = _find_mission(missions, mission_id)
     if match is None:
@@ -68,7 +75,7 @@ def submit_mission(mission_id: str, submission: MissionSubmitRequest) -> Mission
                 "This room doesn't take a flag directly -- head to the "
                 "Evidence Board to review clues and make your final accusation."
             ),
-            already_completed=is_complete(mission_id),
+            already_completed=is_complete(session_id, mission_id),
         )
 
     answer = submission.answer.strip()
@@ -76,14 +83,14 @@ def submit_mission(mission_id: str, submission: MissionSubmitRequest) -> Mission
         return MissionSubmitResponse(
             correct=False,
             message="Enter a flag before submitting.",
-            already_completed=is_complete(mission_id),
+            already_completed=is_complete(session_id, mission_id),
         )
 
     expected = str(match.get("answer", ""))
     correct = check_answer(answer, expected)
 
     if correct:
-        is_new_solve = mark_complete(mission_id)
+        is_new_solve = mark_complete(session_id, mission_id)
         message = (
             "Correct! Evidence unlocked."
             if is_new_solve
@@ -105,5 +112,5 @@ def submit_mission(mission_id: str, submission: MissionSubmitRequest) -> Mission
     return MissionSubmitResponse(
         correct=False,
         message=message,
-        already_completed=is_complete(mission_id),
+        already_completed=is_complete(session_id, mission_id),
     )

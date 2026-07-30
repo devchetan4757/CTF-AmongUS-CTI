@@ -8,23 +8,26 @@ and records a correct guess in progress.json (as mission id
 status, GET /missions -- can see the case is closed, the same way any
 other room reports solved.
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from app.models import FinalAccusationRequest, FinalAccusationResponse
 from app.progress import mark_complete
+from app.session import get_session_id
 from app.storage import read_json
 
 router = APIRouter(tags=["accusation"])
 
 
 @router.post("/final-accusation", response_model=FinalAccusationResponse)
-def final_accusation(request: FinalAccusationRequest) -> FinalAccusationResponse:
+def final_accusation(
+    request: FinalAccusationRequest, session_id: str = Depends(get_session_id)
+) -> FinalAccusationResponse:
     game_state = read_json("game_state.json")
     infiltrator_id = game_state.get("infiltrator_id")
 
     correct = request.suspect_id == infiltrator_id
     if correct:
-        mark_complete("evidence-room")
+        mark_complete(session_id, "evidence-room")
 
     return FinalAccusationResponse(
         correct=correct,
