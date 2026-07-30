@@ -6,8 +6,8 @@
     "concept": "Linux basics (ls, cd, cat)",
     "difficulty": "easy",
     "briefing": "Someone left a crew terminal logged in by the napkin dispenser. Whoever was last here in a hurry didn't bother locking the session.",
-    "prompt": "Use the terminal to look around. Try `ls` to see what's in the current folder, `ls -a` to reveal anything hidden, `cd <folder>` to move into a directory, and `cat <file>` to read a file's contents.",
-    "hint": "Dotfiles (names starting with a period, like `.shift_log`) don't show up in a plain `ls` -- you need the `-a` flag to see them.",
+    "prompt": "This is a computer terminal -- type a command and press Enter to run it. Try `ls` to list files, `cd foldername` to open a folder, and `cat filename` to read a file. Explore around and see what you can find.",
+    "hint": "Run `ls -a` -- the `-a` shows hidden files (ones starting with a dot, like `.shift_log`). Then `cat` it.",
     "answer": "FLAG{ls_cd_cat_master}",
     "clue": "A shift log left open on the terminal shows the same crew member badged into the Cafeteria twice within one hour -- once more than their schedule allows."
   },
@@ -18,8 +18,8 @@
     "concept": "robots.txt",
     "difficulty": "easy",
     "briefing": "The Admin Office runs a small crew-directory site. It looks harmless, but someone building a website in a hurry sometimes leaves a door unlocked without realizing it.",
-    "prompt": "Open a new browser tab and type /robots.txt onto the end of this site's own URL, the same way you'd check any real website. It's meant to tell search engines which pages to skip, but whoever wrote this one left more than that in it.",
-    "hint": "robots.txt is just a plain text file sitting at the root of a site -- no tool needed, just the address bar. Read every line, including anything that isn't a normal 'Disallow' entry.",
+    "prompt": "Look at this site's address bar. Add `/robots.txt` to the end of the URL and press Enter. This file normally just tells search engines what to skip -- but this one has something extra in it.",
+    "hint": "Add `/robots.txt` to the end of the URL in your address bar. Scan the lines for anything that isn't a normal 'Disallow' entry.",
     "answer": "FLAG{robots_dot_txt_secrets}",
     "clue": "The hidden staging page still lists the Admin Assistant as the last person to edit the crew directory, timestamped the night of the incident."
   },
@@ -30,8 +30,8 @@
     "concept": "Default credentials",
     "difficulty": "easy",
     "briefing": "The station's security panel was installed years ago. Whoever set it up meant to change the login before going live -- and never got around to it.",
-    "prompt": "Try logging into the panel using the manufacturer's factory-default username and password. Most default logins for a basic admin panel follow an obvious pattern.",
-    "hint": "The most common default pairing is the plainest one imaginable: a username like 'admin', and a password that's just that word with a number tacked on.",
+    "prompt": "This login panel still has its factory settings -- nobody ever changed them. Try logging in with the most common default username and password combo you can think of.",
+    "hint": "Username: `admin`. Password: the laziest option -- same word, plus simple initial 3 numbers on the end.",
     "answer": "FLAG{admin_admin123_oops}",
     "clue": "The dumped session log shows the Security Officer disabled the corridor camera outside the Lab twelve minutes before the incident was reported."
   },
@@ -42,8 +42,8 @@
     "concept": "Base64 decoding",
     "difficulty": "easy",
     "briefing": "A supply crate in the bay has a label stamped in a string of letters and numbers -- not encryption, just a way of packing text into a shipping-safe format.",
-    "prompt": "Copy the crate's label text and decode it. Base64 text is reversible with no key needed -- you're looking for a tool or method that turns it back into plain text.",
-    "hint": "Base64 output is made only of letters, digits, `+`, `/`, and padding `=` signs at the end. Any online or built-in Base64 decoder will unpack it instantly.",
+    "prompt": "The crate's label is written in a code called Base64 -- it just hides text, it doesn't encrypt it. Copy the label text and decode it to reveal the real message.",
+    "hint": "Random letters/numbers ending in `=`? That's Base64. Search 'base64 decode online' and paste it in.",
     "answer": "FLAG{base64_isnt_encryption}",
     "clue": "The decoded manifest shows the crate was signed out by the Storage Technician, who had no clearance for lab equipment that day."
   },
@@ -54,8 +54,8 @@
     "concept": "Basic OSINT (open-source intelligence)",
     "difficulty": "medium",
     "briefing": "The lab's crew-lookup terminal has a photo pinned above it -- two crewmates fist-bumping, names labeled right on the image. The terminal only hands over a sealed personnel file once someone proves they actually know who's in the picture.",
-    "prompt": "Look closely at the photo taped above the terminal. One of the names belongs to a real public figure. Search the open internet for that person and find their real birth year, then type just the year into the answer field below to unlock the sealed file.",
-    "hint": "Sykkuno is a real Twitch and YouTube streamer. Searching 'Sykkuno birth year' or checking his Wikipedia page will turn up the year he was born -- enter that year, digits only.",
+    "prompt": "Look at the photo above the terminal. One of the names belongs to a real person you can search for online. Find their birth year, then type just the 4-digit year below.",
+    "hint": "Sykkuno is a real streamer. Search 'Sykkuno birth year' and type just the 4 digits.",
     "answer": "1991",
     "clue": "The unlocked record shows the Lab Scientist ran an off-the-books background check on a crewmate the same night, then filed the results under a fake name."
   },
@@ -66,8 +66,8 @@
     "concept": "Synthesis / final accusation",
     "difficulty": "medium",
     "briefing": "Every room has given something up. It's time to lay the evidence side by side and decide who's been covering their tracks.",
-    "prompt": "Review everything collected from the other five rooms, then head to the Evidence Board to compare clues before making your final accusation.",
-    "hint": "Look for the one suspect whose clue doesn't have an innocent explanation -- everyone else's evidence points to a small, explainable slip.",
+    "prompt": "You've cleared every room! Now go to the Evidence Board, read what each suspect says, and figure out whose story doesn't add up before making your final accusation.",
+    "hint": "Read what each suspect says on the Evidence Board. One story flat-out couldn't be true given their room -- that's your suspect.",
     "answer": "FLAG{the_guard_went_dark}",
     "clue": "With every room's evidence laid out, the Security Officer is the only suspect whose action has no innocent explanation: disabling the corridor camera outside the Lab minutes before the incident."
   }

@@ -52,9 +52,14 @@ class MissionSubmitResponse(BaseModel):
 class SuspectEvidence(BaseModel):
     """One suspect's card on the Evidence Board / Final Accusation screen.
 
-    `clue` is only populated once the player has solved the mission in
-    that suspect's room (see `unlocked`) -- so a player can't skip
-    ahead to the accusation with incomplete information.
+    `clue` is the objective evidence their room's mission uncovers.
+    `statement` is what the suspect themselves claims when questioned --
+    for everyone except the infiltrator it lines up with an innocent
+    reading of the clue; for the infiltrator it directly contradicts
+    it, which is the actual tell a player is meant to catch. Both are
+    only populated once the player has solved the mission in that
+    suspect's room (see `unlocked`) -- so a player can't skip ahead to
+    the accusation with incomplete information.
     """
 
     id: str
@@ -63,6 +68,7 @@ class SuspectEvidence(BaseModel):
     mission_id: str
     unlocked: bool = False
     clue: str | None = None
+    statement: str | None = None
 
 
 class FinalAccusationRequest(BaseModel):

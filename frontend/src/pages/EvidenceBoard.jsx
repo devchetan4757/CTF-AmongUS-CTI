@@ -125,8 +125,11 @@ export default function EvidenceBoard() {
                   </div>
 
                   {suspect.unlocked ? (
-                    <p className="mt-2 font-body text-sm leading-[1.5] text-white drop-shadow-[0_3px_5px_rgba(0,0,0,1)] sm:text-base">
-                      {suspect.clue}
+                    <p className="mt-2 font-body text-sm italic leading-[1.5] text-white drop-shadow-[0_3px_5px_rgba(0,0,0,1)] sm:text-base">
+                      <span className="not-italic font-display text-[11px] font-bold uppercase tracking-wide text-paper-dim sm:text-xs">
+                        Says:{" "}
+                      </span>
+                      {suspect.statement}
                     </p>
                   ) : (
                     <p className="mt-2 font-mono text-[11px] uppercase tracking-wide text-paper-dim drop-shadow-[0_3px_5px_rgba(0,0,0,1)] sm:text-xs">

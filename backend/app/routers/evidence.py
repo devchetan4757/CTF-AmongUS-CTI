@@ -32,6 +32,7 @@ def get_evidence(session_id: str = Depends(get_session_id)) -> list[SuspectEvide
                 mission_id=suspect["mission_id"],
                 unlocked=unlocked,
                 clue=suspect["clue"] if unlocked else None,
+                statement=suspect["statement"] if unlocked else None,
             )
         )
     return suspects

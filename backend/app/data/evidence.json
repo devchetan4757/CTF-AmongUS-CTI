@@ -6,6 +6,7 @@
       "name": "Cook",
       "role": "Cafeteria Chef",
       "mission_id": "cafeteria",
+      "statement": "\"I just used ls and cd to grab supplies from the back room -- didn't even know there were hidden files on that terminal until someone from IT mentioned it.\"",
       "clue": "A shift log left open on the terminal shows the same crew member badged into the Cafeteria twice within one hour -- once more than their schedule allows."
     },
     {
@@ -13,6 +14,7 @@
       "name": "Clerk",
       "role": "Admin Assistant",
       "mission_id": "admin",
+      "statement": "\"I only ever edit the crew directory through the front-end form -- I wouldn't know a robots.txt file from a grocery list.\"",
       "clue": "The hidden staging page still lists the Admin Assistant as the last person to edit the crew directory, timestamped the night of the incident."
     },
     {
@@ -20,6 +22,7 @@
       "name": "Guard",
       "role": "Security Officer",
       "mission_id": "security",
+      "statement": "\"My panel's login has never used a default password. I changed it myself the day it was installed -- I'd bet my badge on it.\"",
       "clue": "The dumped session log shows the Security Officer disabled the corridor camera outside the Lab twelve minutes before the incident was reported."
     },
     {
@@ -27,6 +30,7 @@
       "name": "Hauler",
       "role": "Storage Technician",
       "mission_id": "storage",
+      "statement": "\"That crate label was just routine stock code, scrambled text or not -- I sign out whatever's on the manifest, no questions asked.\"",
       "clue": "The decoded manifest shows the crate was signed out by the Storage Technician, who had no clearance for lab equipment that day."
     },
     {
@@ -34,6 +38,7 @@
       "name": "Researcher",
       "role": "Lab Scientist",
       "mission_id": "laboratory",
+      "statement": "\"I don't go digging up birthdays or backgrounds on people online -- that's not something I'd waste my shift doing.\"",
       "clue": "The unlocked record shows the Lab Scientist ran an off-the-books background check on a crewmate the same night, then filed the results under a fake name."
     }
   ]

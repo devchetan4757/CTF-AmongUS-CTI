@@ -288,9 +288,18 @@ export default function FinalAccusation() {
               <p className="font-display text-sm font-black uppercase tracking-wide text-black sm:text-base">
                 {openSuspect.name}
               </p>
-              <p className="mt-1 break-words font-body text-xs leading-snug text-black/80 sm:text-sm">
-                {openSuspect.unlocked ? openSuspect.clue : "Testimony locked"}
-              </p>
+              {openSuspect.unlocked ? (
+                <p className="mt-1 break-words font-body text-xs italic leading-snug text-black/80 sm:text-sm">
+                  <span className="not-italic font-display text-[10px] font-bold uppercase tracking-wide text-black/50">
+                    Says:{" "}
+                  </span>
+                  {openSuspect.statement}
+                </p>
+              ) : (
+                <p className="mt-1 break-words font-body text-xs leading-snug text-black/80 sm:text-sm">
+                  Testimony locked
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -351,8 +360,17 @@ export default function FinalAccusation() {
                       }`}
                       textClassName="text-lg sm:text-xl"
                     />
-                    <p className="min-w-0 flex-1 break-words font-body text-xs leading-snug text-black/85 sm:text-sm">
-                      {suspect.unlocked ? suspect.clue : "Testimony locked"}
+                    <p className="min-w-0 flex-1 break-words font-body text-xs italic leading-snug text-black/85 sm:text-sm">
+                      {suspect.unlocked ? (
+                        <>
+                          <span className="not-italic font-display text-[10px] font-bold uppercase tracking-wide text-black/45">
+                            Says:{" "}
+                          </span>
+                          {suspect.statement}
+                        </>
+                      ) : (
+                        "Testimony locked"
+                      )}
                     </p>
                   </div>
                 );
